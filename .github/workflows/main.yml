@@ -17,9 +17,21 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
+
+      - name: Recreate Android Project Configuration
+        run: |
+          mkdir -p temp_project
+          cd temp_project
+          flutter create --platforms=android .
+          cp -r android ..
+          cd ..
+          rm -rf temp_project
           
-      - name: Fix Gradle Permissions
-        run: chmod +x android/gradlew || true
-        
       - name: Build APK
-        run: flutter build apk --release --no-pub
+        run: flutter build apk --release
+        
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: my-apk
+          path: build/app/outputs/flutter-apk/app-release.apk
