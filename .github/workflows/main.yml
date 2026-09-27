@@ -28,10 +28,11 @@ jobs:
           rm -rf temp_project
           
       - name: Build APK
-        run: flutter build apk --release
+        run: flutter build apk --debug
         
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: my-apk
-          path: build/app/outputs/flutter-apk/app-release.apk
+          path: build/app/outputs/flutter-apk/app-debug.apk
+
